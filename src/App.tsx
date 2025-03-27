@@ -1,15 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/routes";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 

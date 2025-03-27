@@ -1,18 +1,24 @@
 import { useState } from "react";
+import Button from "../components/Button";
+import { useLogin } from "../hooks/useLogin";
+import { LoginDto } from "../types/dto/loginDto";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, loading, error } = useLogin();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
+    const credentials: LoginDto = { email, password };
+    login(credentials);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+        {error && <p className="text-red-500 text-center mb-2">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -36,9 +42,9 @@ const Login = () => {
               className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
-            Login
-          </button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </Button>
         </form>
       </div>
     </div>
