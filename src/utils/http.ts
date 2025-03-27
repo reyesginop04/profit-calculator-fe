@@ -4,6 +4,9 @@ type FetchOptions = RequestInit & { params?: Record<string, string | number> };
 
 const request = async <T>(url: string, { params, headers, ...options }: FetchOptions = {}): Promise<T> => {
   try {
+    // Retrieve token (Modify this if you use a different storage method)
+    const token = localStorage.getItem("token");
+
     // Build URL with query params
     const queryString = params ? "?" + new URLSearchParams(params as Record<string, string>).toString() : "";
     const fullUrl = `${BASE_URL}${url}${queryString}`;
@@ -12,6 +15,7 @@ const request = async <T>(url: string, { params, headers, ...options }: FetchOpt
       ...options,
       headers: {
         "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "", // Add Bearer token if available
         ...headers,
       },
     });
