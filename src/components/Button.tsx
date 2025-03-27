@@ -11,7 +11,7 @@ type ButtonProps = {
 const Button: React.FC<ButtonProps> = ({ className, onClick, disabled, type = "button", children }) => {
   return (
     <button
-      className={`w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition ${className}`}
+      className={`w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition cursor-pointer ${className}`}
       disabled={disabled}
       onClick={onClick}
       type={type}
