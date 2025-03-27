@@ -1,54 +1,137 @@
-# React + TypeScript + Vite
+# Product Profit Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Summary
 
-Currently, two official plugins are available:
+Product Profit Calculator is a simple and efficient tool to calculate the profit margin and selling price of a product based on cost, markup percentage, and additional fees. This application helps business owners, e-commerce sellers, and marketers make informed pricing decisions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
 
-## Expanding the ESLint configuration
+- [Vite](https://vitejs.dev/) - Fast build tool for modern web projects
+- [React](https://react.dev/) - JavaScript library for building UI
+- [TypeScript](https://www.typescriptlang.org/) - Strongly typed JavaScript
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Nginx](https://nginx.org/) - Web server for serving the production build
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Setup on Local
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (>= 18.x) & npm/yarn
+- Git
+
+### Installation
+
+1. **Clone the repository:**
+
+```sh
+git clone https://github.com/reyesginop04/profit-calculator-fe.git
+cd profit-calculator-fe
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Configure environment variables:**
+   Create a `.env` file in the root directory and add the following:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```ini
+VITE_API_BASE_URL=http://localhost:5000/api
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+3. **Building for Production**
+
+```sh
+npm run dev
+```
+
+4. **Open the App in the Browser**
+   Visit http://localhost:5173/ to see the application.
+
+---
+
+## Setup on Ubuntu
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (>= 18.x) & npm/yarn
+- Git
+
+### Installation
+
+1. **Navigate to `/var/www` and clone the repository:**
+
+```sh
+cd /var/www
+sudo git clone https://github.com/reyesginop04/profit-calculator-fe.git
+cd profit-calculator-fe
+sudo chown -R $USER:$USER .
+npm install  # or yarn install
+```
+
+2. **Configure environment variables:**
+   Create a `.env` file in the root directory and add the following:
+
+```ini
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+3. **Building for Production**
+
+```sh
+npm run build
+```
+
+##### Hosting the Production Build with Nginx
+
+4. **Set Up Nginx Configuration**
+   Create a new Nginx configuration file:
+
+```sh
+sudo nano /etc/nginx/sites-available/product-profit-calculator
+```
+
+Add the following configuration:
+
+```ini
+server {
+    listen 80;
+    server_name yourdomain.com;
+
+    root /var/www/product-profit-calculator/dist;
+    index index.html;
+    location / {
+        try_files $uri /index.html;
+    }
+
+    error_page 404 /index.html;
+
+    location ~* \.(?:ico|css|js|gif|jpe?g|png|woff2?|eot|ttf|svg)$ {
+        expires max;
+        log_not_found off;
+    }
+}
+```
+
+5. **Enable the Configuration**
+
+```sh
+sudo ln -s /etc/nginx/sites-available/product-profit-calculator /etc/nginx/sites-enabled/
+```
+
+6. **Restart Nginx**
+
+```sh
+sudo systemctl restart nginx
+```
+
+7. **Open the App in the Browser**
+   Visit http://yourdomain.com/ or http://your-server-ip/ to see the hosted application.
+
+### Example .env Configuration
+
+```ini
+VITE_API_BASE_URL=http://localhost:5000/api
 ```
