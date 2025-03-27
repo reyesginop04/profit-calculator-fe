@@ -4,23 +4,27 @@ import { useAuth } from "../providers/AuthProvider";
 const Sidebar = () => {
   const { logout } = useAuth();
   return (
-    <aside className="w-64 bg-white shadow-md h-full">
-      <div className="p-4 text-xl font-bold">MyApp</div>
-      <nav className="mt-4">
-        <ul>
-          <li className="px-4 py-2 hover:bg-gray-200">
-            <Link to="/dashboard">Dashboard</Link>
+    <aside className="w-64 bg-gray-100 shadow-lg h-full flex flex-col">
+      <div className="p-6 text-2xl font-extrabold text-blue-600">Profit Cost</div>
+      <nav className="flex-1 mt-6">
+        <ul className="space-y-2">
+          <li>
+            <Link to="/dashboard" className="block px-6 py-3 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+              Dashboard
+            </Link>
           </li>
-          <li className="px-4 py-2 hover:bg-gray-200">
-            <Link to="/settings">Product Calculation</Link>
+          <li>
+            <Link to="/settings" className="block px-6 py-3 rounded-lg hover:bg-blue-100 text-gray-700 font-medium">
+              Product Calculation
+            </Link>
           </li>
-          <li className="px-4 py-2 hover:bg-gray-200">
+          <li>
             <button
               onClick={() => {
                 logout();
                 window.location.href = "/"; // Redirect to login
               }}
-              className="w-full text-left cursor-pointer"
+              className="block w-full px-6 py-3 text-left rounded-lg hover:bg-red-100 text-red-600 font-medium"
             >
               Logout
             </button>
