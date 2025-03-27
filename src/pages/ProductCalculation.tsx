@@ -69,7 +69,7 @@ const ProductCostForm = () => {
           onChange={handleChange}
           className="border border-gray-300 rounded px-3 py-2 w-full"
         >
-          <option value="percentage">Percentage</option>
+          <option value="percent">Percentage</option>
           <option value="fixed">Fixed</option>
         </select>
       </div>
