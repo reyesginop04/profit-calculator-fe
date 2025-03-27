@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { http } from "../api/http";
-import { ProductCalculationCreateDto, ProductCalculationListResponseDto } from "../types/dto/productCalculationDto";
+import { ProductCalculationCreateDto } from "../types/dto/productCalculationDto";
+import { productCalculationAPI } from "../api/productCalculation";
 
 // Hook definition
 export const useSaveProductCalculation = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>("");
   const [success, setSuccess] = useState(false);
 
   const [formData, setFormData] = useState<ProductCalculationCreateDto>({
@@ -26,13 +27,13 @@ export const useSaveProductCalculation = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
     setSuccess(false);
 
     try {
-      const response = await http.post("/product-calculation", formData);
+      const response = await productCalculationAPI.create(formData);
       console.log("API Response:", response);
       setSuccess(true);
+      setMessage(response.message);
       setFormData({
         baseCOG: "",
         shipping: "",
@@ -43,11 +44,11 @@ export const useSaveProductCalculation = () => {
         targetMargin: "",
       });
     } catch (err) {
-      setError((err as Error).message || "Something went wrong");
+      setMessage((err as Error).message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
-  return { formData, handleChange, handleSubmit, loading, error, success };
+  return { formData, handleChange, handleSubmit, loading, message, success };
 };

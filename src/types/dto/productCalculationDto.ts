@@ -13,6 +13,11 @@ export interface ProductCalculationCreateDto {
 export interface ProductCalculationUpdateDto extends ProductCalculationCreateDto {}
 
 export interface ProductCalculationListResponseDto extends ProductCalculation {}
+
+export interface ProductCalculationCreateResponseDto {
+  message: string;
+  productCalculation: ProductCalculation;
+}
 export interface ProductCalculationUpdateResponseDto {
   message: string;
   productCalculation: ProductCalculation;

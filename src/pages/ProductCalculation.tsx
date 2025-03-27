@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import { useSaveProductCalculation } from "../hooks/useSaveProductCalculation";
 
 const ProductCostForm = () => {
-  const { formData, handleChange, handleSubmit, loading, error, success } = useSaveProductCalculation();
+  const { formData, handleChange, handleSubmit, loading, message, success } = useSaveProductCalculation();
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -85,8 +85,8 @@ const ProductCostForm = () => {
         />
       </div>
       {/** API State Messages */}
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">Product cost submitted successfully!</p>}
+      {!success && <p className="text-red-500">{message}</p>}
+      {success && <p className="text-green-500">{message}</p>}
 
       {/** Submit Button */}
       <Button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" disabled={loading}>
