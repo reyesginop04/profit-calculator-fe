@@ -1,6 +1,7 @@
-import { LoginDto, LoginResponseDto } from "../types/dto/loginDto";
+import { LoginDto, LoginResponseDto, RegisterDto, RegisterResponseDto } from "../types/dto/authDto";
 import { http } from "./http";
 
 export const authAPI = {
-  login: (credentials: LoginDto): Promise<LoginResponseDto> => http.post("/auth/login", credentials),
+  login: (body: LoginDto): Promise<LoginResponseDto> => http.post("/auth/login", body),
+  register: (body: RegisterDto): Promise<RegisterResponseDto> => http.post("/auth/register", body),
 };

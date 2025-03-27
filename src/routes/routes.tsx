@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import ProductCalculation from "../pages/ProductCalculation";
+import Register from "../pages/Register";
 
 const AppRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const AppRoutes = () => {
       <Route element={<PublicRoute />}>
         <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect root to login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
 
       {/* Protected Routes */}

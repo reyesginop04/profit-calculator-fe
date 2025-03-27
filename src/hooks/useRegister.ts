@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { authAPI } from "../api/auth";
-import { useAuth } from "../providers/AuthProvider";
-import { LoginDto } from "../types/dto/authDto";
+import { RegisterDto } from "../types/dto/authDto";
 
-export const useLogin = () => {
-  const navigate = useNavigate();
-  const { login: authLogin } = useAuth();
+export const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<LoginDto>({
+  const [formData, setFormData] = useState<RegisterDto>({
+    name: "",
     email: "",
     password: "",
   });
@@ -27,20 +24,14 @@ export const useLogin = () => {
     setSuccess(false);
 
     try {
-      const response = await authAPI.login(formData);
+      const response = await authAPI.register(formData);
       console.log("API Response:", response);
-      setMessage(response.message);
       setSuccess(true);
-
-      // Store token in local storage
-      authLogin(response.token);
-
-      // Redirect to dashboard
-      navigate("/dashboard");
+      setMessage(response.message);
     } catch (err) {
       const message = err instanceof Error ? err.message : "An error occurred";
       setMessage(message);
-      console.error("Login failed:", err);
+      console.error("Register failed:", err);
     } finally {
       setLoading(false);
     }
