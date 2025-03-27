@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { User } from "../types/user";
 
-const Sidebar = () => {
+interface SidebarProps {
+  userProfile: User | null;
+}
+
+const Sidebar = ({ userProfile }: SidebarProps) => {
   return (
     <aside className="w-52 flex-shrink-0 bg-gray-100 shadow-lg h-full flex flex-col">
       <div className="p-6 text-2xl font-extrabold text-blue-600">Profit Cost</div>
