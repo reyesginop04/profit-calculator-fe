@@ -1,50 +1,27 @@
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import AuthenticatedLayout from "../layouts/AuthenticatedLayout";
-import UnauthenticatedLayout from "../layouts/UnauthenticatedLayout";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 import NotFound from "../pages/NotFound";
-// Define routes in arrays
-const unauthenticatedRoutes = [{ path: "/", element: <Login /> }];
-
-const authenticatedRoutes = [
-  { path: "/dashboard", element: <Dashboard /> },
-  //   { path: "/settings", element: <Settings /> },
-  //   { path: "/profile", element: <Profile /> },
-];
 
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
-
   return (
     <Routes>
-      {/* Unauthenticated Routes */}
-      {unauthenticatedRoutes.map(({ path, element }) => (
-        <Route
-          key={path}
-          path={path}
-          element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <UnauthenticatedLayout>{element}</UnauthenticatedLayout>
-            )
-          }
-        />
-      ))}
+      {/* Public Routes */}
+      <Route element={<PublicRoute />}>
+        <Route path="/" element={<Navigate to="/login" />} /> {/* Redirect root to login */}
+        <Route path="/login" element={<Login />} />
+      </Route>
 
-      {/* Authenticated Routes */}
-      {authenticatedRoutes.map(({ path, element }) => (
-        <Route
-          key={path}
-          path={path}
-          element={isAuthenticated ? <AuthenticatedLayout>{element}</AuthenticatedLayout> : <Navigate to="/" replace />}
-        />
-      ))}
+      {/* Protected Routes */}
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Navigate to="/dashboard" />} /> {/* Redirect root to dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
 
-      {/* Catch-All 404 Route */}
-      <Route path="*" element={<NotFound />} />
+      {/* Open to everyone */}
+      <Route path="/" element={<NotFound />} />
     </Routes>
   );
 };

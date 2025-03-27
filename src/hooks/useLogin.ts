@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { http } from "../utils/http";
 import { LoginDto, LoginResponseDto } from "../types/dto/loginDto";
+import { useAuth } from "../providers/AuthProvider";
 
 export const useLogin = () => {
+  const { login: authLogin } = useAuth();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -15,8 +18,8 @@ export const useLogin = () => {
     try {
       const response = await http.post<LoginResponseDto>("/auth/login", credentials);
 
-      // Store token
-      localStorage.setItem("token", response.token);
+      // Store token in local storage
+      authLogin(response.token);
 
       // Redirect to dashboard
       navigate("/dashboard");
