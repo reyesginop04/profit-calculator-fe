@@ -13,9 +13,9 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 overflow-hidden bg-white">
         <Topbar />
-        <main className="p-6">{children}</main>
+        <main className="p-6 h-screen overflow-scroll">{children}</main>
       </div>
     </div>
   );
