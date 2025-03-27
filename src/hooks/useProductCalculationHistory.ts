@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { http } from "../api/http";
+import { productCalculationAPI } from "../api/productCalculation";
 import { ProductCalculationListResponseDto } from "../types/dto/productCalculationDto";
 
 // Hook definition
@@ -12,10 +12,10 @@ export const useProductCalculationHistory = () => {
     const fetchHistory = async () => {
       try {
         setLoading(true);
-        const response = await http.get<ProductCalculationListResponseDto[]>(`/product-calculation/`);
+        const response = await productCalculationAPI.getHistory();
 
-        if (response && response) {
-          setHistory(response); // ✅ Now response is correctly typed
+        if (response) {
+          setHistory(response);
         } else {
           throw new Error("Invalid response format.");
         }
