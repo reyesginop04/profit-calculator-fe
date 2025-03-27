@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { http } from "../utils/http";
+import { http } from "../api/http";
 import { LoginDto, LoginResponseDto } from "../types/dto/loginDto";
 import { useAuth } from "../providers/AuthProvider";
 
