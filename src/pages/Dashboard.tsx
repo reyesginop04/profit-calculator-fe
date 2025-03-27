@@ -1,9 +1,19 @@
+import { useState } from "react";
 import Button from "../components/Button";
 import { useProductCalculationHistory } from "../hooks/useProductCalculationHistory";
 import { dateFormatter } from "../utils/dateFormatter";
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import { useDeleteProductCalculation } from "../hooks/useDeleteProductCalculation";
 
 const Dashboard = () => {
-  const { history, loading, error } = useProductCalculationHistory();
+  const { history, refetch, loading, error } = useProductCalculationHistory();
+
+  const {
+    selectedId: selectedDeleteId,
+    openModal: openDeleteModal,
+    closeModal: closeDeleteModal,
+    handleDelete,
+  } = useDeleteProductCalculation(refetch);
 
   return (
     <>
@@ -59,14 +69,29 @@ const Dashboard = () => {
                 <td className="border border-gray-300 px-4 py-2">{dateFormatter.formatLong(item.createdAt)}</td>
                 <td className="border border-gray-300 px-4 py-2">{dateFormatter.formatLong(item.updatedAt)}</td>
                 <td className="border border-gray-300 px-4 py-2">
-                  <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-3">Edit</Button>
-                  <Button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-3">Delete</Button>
+                  <Button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-3"
+                    onClick={() => null}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-3"
+                    onClick={() => openDeleteModal(item._id)}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
+      <DeleteConfirmationModal
+        open={selectedDeleteId !== null}
+        onClose={() => closeDeleteModal()}
+        onConfirm={handleDelete}
+      />
     </>
   );
 };
