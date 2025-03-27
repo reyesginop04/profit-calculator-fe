@@ -6,7 +6,7 @@ export interface ProductCalculation {
   duties: number;
   otherCosts: number;
   platformFee: number;
-  platformFeeType: string;
+  platformFeeType: "percent" | "fixed";
   targetMargin: number;
   landedCost: number;
   finalCOG: number;

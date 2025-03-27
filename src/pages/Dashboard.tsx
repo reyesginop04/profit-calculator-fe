@@ -1,9 +1,10 @@
-import { useState } from "react";
 import Button from "../components/Button";
-import { useProductCalculationHistory } from "../hooks/useProductCalculationHistory";
-import { dateFormatter } from "../utils/dateFormatter";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import UpdateConfirmationModal from "../components/UpdateConfirmationModal";
 import { useDeleteProductCalculation } from "../hooks/useDeleteProductCalculation";
+import { useProductCalculationHistory } from "../hooks/useProductCalculationHistory";
+import { useUpdateProductCalculation } from "../hooks/useUpdateProductCalculation";
+import { dateFormatter } from "../utils/dateFormatter";
 
 const Dashboard = () => {
   const { history, refetch, loading, error } = useProductCalculationHistory();
@@ -14,6 +15,18 @@ const Dashboard = () => {
     closeModal: closeDeleteModal,
     handleDelete,
   } = useDeleteProductCalculation(refetch);
+
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    loading: updateLoading,
+    message: updateMessage,
+    success: updateSuccess,
+    selectedId: selectedUpdateId,
+    openModal: openUpdateModal,
+    closeModal: closeUpdateModal,
+  } = useUpdateProductCalculation(refetch);
 
   return (
     <>
@@ -71,7 +84,7 @@ const Dashboard = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   <Button
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-3"
-                    onClick={() => null}
+                    onClick={() => openUpdateModal(item)}
                   >
                     Edit
                   </Button>
@@ -87,6 +100,16 @@ const Dashboard = () => {
           )}
         </tbody>
       </table>
+      <UpdateConfirmationModal
+        open={selectedUpdateId !== null}
+        onClose={() => closeUpdateModal()}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        formData={formData}
+        message={updateMessage}
+        success={updateSuccess}
+        loading={updateLoading}
+      />
       <DeleteConfirmationModal
         open={selectedDeleteId !== null}
         onClose={() => closeDeleteModal()}

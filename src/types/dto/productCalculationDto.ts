@@ -10,4 +10,10 @@ export interface ProductCalculationCreateDto {
   targetMargin: string;
 }
 
+export interface ProductCalculationUpdateDto extends ProductCalculationCreateDto {}
+
 export interface ProductCalculationListResponseDto extends ProductCalculation {}
+export interface ProductCalculationUpdateResponseDto {
+  message: string;
+  productCalculation: ProductCalculation;
+}
